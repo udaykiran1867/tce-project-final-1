@@ -14,5 +14,6 @@ dotenv.config({
 export const ENV = {
   SUPABASE_URL: process.env.SUPABASE_URL,
   SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
   PORT: process.env.PORT || 5000
 };

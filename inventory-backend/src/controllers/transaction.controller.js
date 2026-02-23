@@ -125,11 +125,11 @@ export const updateTransaction = async (req, res) => {
       return res.status(404).json({ error: 'Transaction not found' });
     }
 
-    const isReturnedValue = (value) => typeof value === 'string' && value.includes('T');
+    const hasReturnValue = (value) => value !== null && value !== undefined && value !== '';
 
     const oldQty = tx.quantity || 1;
     const oldType = tx.transaction_type;
-    const oldReturned = isReturnedValue(tx.return_date);
+    const oldReturned = hasReturnValue(tx.return_date);
 
     const newQty = body.quantity !== undefined ? Number(body.quantity) : oldQty;
     if (!Number.isFinite(newQty) || newQty <= 0) {
@@ -144,7 +144,7 @@ export const updateTransaction = async (req, res) => {
     const newReturnDate = body.return_date === ''
       ? null
       : (body.return_date !== undefined ? body.return_date : tx.return_date);
-    const newReturned = isReturnedValue(newReturnDate);
+    const newReturned = hasReturnValue(newReturnDate);
 
     const { data: stock, error: stockFetchError } = await supabase
       .from('product_stock')
@@ -156,28 +156,68 @@ export const updateTransaction = async (req, res) => {
       return res.status(400).json({ error: stockFetchError.message });
     }
 
-    let baseAvailable = stock?.available_count || 0;
-    let baseMaster = stock?.master_count || 0;
+    // let baseAvailable = stock?.available_count || 0;
+    // let baseMaster = stock?.master_count || 0;
 
-    if (oldType === 'borrowed') {
-      if (!oldReturned) {
-        baseAvailable += oldQty;
-      }
-    } else if (oldType === 'purchased') {
-      baseAvailable += oldQty;
-    }
+    // if (oldType === 'borrowed') {
+    //   if (!oldReturned) {
+    //     baseAvailable += oldQty;
+    //   }
+    // } else if (oldType === 'purchased') {
+    //   baseAvailable += oldQty;
+    // }
 
-    let nextAvailable = baseAvailable;
-    let nextMaster = baseMaster;
+    // let nextAvailable = baseAvailable;
+    // let nextMaster = baseMaster;
 
-    if (newType === 'borrowed') {
-      nextAvailable -= newQty;
-      if (newReturned) {
-        nextAvailable += newQty;
-      }
-    } else if (newType === 'purchased') {
-      nextAvailable -= newQty;
-    }
+    // if (newType === 'borrowed') {
+    //   nextAvailable -= newQty;
+    //   if (newReturned) {
+    //     nextAvailable += newQty;
+    //   }
+    // } else if (newType === 'purchased') {
+    //   nextAvailable -= newQty;
+    // }
+    let nextAvailable = stock?.available_count || 0;
+let nextMaster = stock?.master_count || 0;
+
+
+// REMOVE OLD EFFECT
+
+if (oldType === 'borrowed') {
+
+  if (!oldReturned) {
+
+    nextAvailable += oldQty;
+
+  }
+
+}
+
+else if (oldType === 'purchased') {
+
+  nextAvailable += oldQty;
+
+}
+
+
+// APPLY NEW EFFECT
+
+if (newType === 'borrowed') {
+
+  if (!newReturned) {
+
+    nextAvailable -= newQty;
+
+  }
+
+}
+
+else if (newType === 'purchased') {
+
+  nextAvailable -= newQty;
+
+}
 
     if (nextAvailable > nextMaster) {
       nextAvailable = nextMaster;
