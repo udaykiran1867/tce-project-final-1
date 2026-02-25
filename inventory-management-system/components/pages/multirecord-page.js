@@ -6,7 +6,7 @@ import { Plus, Trash2, ClipboardList } from "lucide-react"
 
 const getTodayDate = () => new Date().toISOString().split("T")[0]
 
-const createRow = () => ({ productId: "", quantity: "1" })
+const createRow = () => ({ productId: "", quantity: "1", type: "borrow" })
 
 export function MultiRecordPage() {
   const { products, addBorrowRecord } = useInventory()
@@ -87,7 +87,8 @@ export function MultiRecordPage() {
         return
       }
 
-      parsedRows.push({ productId: row.productId, quantity: qty })
+      const type = row.type === "purchase" ? "purchase" : "borrow"
+      parsedRows.push({ productId: row.productId, quantity: qty, type })
     }
 
     const grouped = parsedRows.reduce((acc, row) => {
@@ -115,8 +116,8 @@ export function MultiRecordPage() {
         phoneNumber: phoneNumber.trim(),
         section: section.trim().toUpperCase(),
         takenDate,
-        returnDate: returnDate || "",
-        type: "borrow",
+        returnDate: row.type === "borrow" ? (returnDate || "") : "",
+        type: row.type,
         quantity: row.quantity,
       })
 
@@ -128,7 +129,7 @@ export function MultiRecordPage() {
     }
 
     setIsSubmitting(false)
-    setSuccess(`Saved ${parsedRows.length} borrow record${parsedRows.length > 1 ? "s" : ""} successfully.`)
+    setSuccess(`Saved ${parsedRows.length} record${parsedRows.length > 1 ? "s" : ""} successfully.`)
     resetForm()
   }
 
@@ -151,7 +152,7 @@ export function MultiRecordPage() {
             </h1>
           </div>
           <p className="text-sm text-gray-600 ml-12">
-            Enter student details once and add multiple borrowed components with quantities in a single submission.
+            Enter student details once and add multiple borrow or purchase records in a single submission.
           </p>
         </div>
       </div>
@@ -291,7 +292,7 @@ export function MultiRecordPage() {
                 <div className="rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 p-2 shadow-md">
                   <Plus className="h-5 w-5 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900">Borrowed Components</h2>
+                <h2 className="text-lg font-bold text-gray-900">Components</h2>
                 <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-bold text-purple-700 border border-purple-300">
                   {rows.length} {rows.length === 1 ? 'item' : 'items'}
                 </span>
@@ -309,10 +310,22 @@ export function MultiRecordPage() {
 
             <div className="space-y-3">
               {rows.map((row, index) => (
-                <div 
-                  key={`row-${index}`} 
-                  className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_140px_auto] p-3 rounded-lg border-2 border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-purple-300 transition-all"
+                <div
+                  key={`row-${index}`}
+                  className="grid grid-cols-1 gap-3 sm:grid-cols-[180px_1fr_140px_auto] p-3 rounded-lg border-2 border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-purple-300 transition-all"
                 >
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-semibold text-gray-600">Type</label>
+                    <select
+                      className="h-10 rounded-lg border-2 border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm transition-all focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 hover:border-purple-300"
+                      value={row.type}
+                      onChange={(e) => updateRow(index, { type: e.target.value })}
+                    >
+                      <option value="borrow">Borrow</option>
+                      <option value="purchase">Purchase</option>
+                    </select>
+                  </div>
+
                   <div className="flex flex-col gap-1">
                     <label className="text-xs font-semibold text-gray-600">Component</label>
                     <select
@@ -368,7 +381,7 @@ export function MultiRecordPage() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity" />
           <ClipboardList className="h-5 w-5 relative z-10" />
-          <span className="relative z-10">{isSubmitting ? "Saving Records..." : "Save All Borrow Records"}</span>
+          <span className="relative z-10">{isSubmitting ? "Saving Records..." : "Save All Records"}</span>
         </button>
       </form>
     </div>
