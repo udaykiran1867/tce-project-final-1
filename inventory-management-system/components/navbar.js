@@ -42,7 +42,7 @@ export function Navbar() {
             priority
           />
           <span className="font-semibold hidden sm:inline-block">
-            Technical Career Education
+            
           </span>
         </Link>
 

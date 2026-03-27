@@ -165,7 +165,8 @@ export function InvoicePage() {
       </div>
 
       <form
-        className="rounded-xl border-2 border-slate-300 bg-card p-6 shadow-sm"
+        className="rounded-xl p-6 shadow-sm"
+        style={{ border: "2px solid oklch(24.571% 0.12604 288.685)", backgroundColor: "var(--card)" }}
         onSubmit={handleUpload}
       >
         <div className="grid gap-4 md:grid-cols-3">
@@ -220,8 +221,8 @@ export function InvoicePage() {
         </div>
       </form>
 
-      <div className="rounded-xl border-2 border-slate-300 bg-card shadow-sm">
-        <div className="flex items-center justify-between border-b px-6 py-4">
+      <div className="rounded-xl bg-card shadow-sm" style={{ border: "2px solid oklch(24.571% 0.12604 288.685)" }}>
+        <div className="flex items-center justify-between border-b px-6 py-4" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
           <div className="flex items-center gap-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
             <h2 className="text-base font-semibold">Uploaded Invoices</h2>
@@ -231,7 +232,7 @@ export function InvoicePage() {
           </span>
         </div>
 
-        <div className="border-b px-6 py-4">
+        <div className="border-b px-6 py-4" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
           <div className="grid gap-3 md:grid-cols-2">
             <input
               type="search"

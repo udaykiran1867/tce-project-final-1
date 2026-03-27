@@ -73,9 +73,10 @@ function Card({ className, ...props }) {
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border-2 border-slate-400 dark:border-slate-600 shadow-sm transition-all duration-300 hover:shadow-md",
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border-2 shadow-sm",
         className,
       )}
+      style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}
       {...props}
     />
   )
@@ -86,7 +87,7 @@ function CardHeader({ className, ...props }) {
     <div
       data-slot="card-header"
       className={cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 pt-5 pb-4 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
         className,
       )}
       {...props}
@@ -118,7 +119,7 @@ function CardContent({ className, ...props }) {
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6", className)}
+      className={cn("px-6 pb-6", className)}
       {...props}
     />
   )
@@ -128,7 +129,8 @@ function Table({ className, ...props }) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto rounded-lg border-2 border-slate-400 dark:border-slate-600"
+      className="relative w-full overflow-x-auto rounded-lg border-2"
+      style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}
     >
       <table
         data-slot="table"
@@ -464,25 +466,18 @@ export function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-8 px-4 py-6 sm:px-6 lg:px-8 animate-in fade-in duration-500">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-5 dark:opacity-[0.02]"></div>
-      </div>
-
-      {/* Header Section */}
-      <div className="flex flex-col gap-6">
+    <div className="space-y-6 px-4 py-2 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <h1 
-              className="text-3xl font-bold tracking-tight"
+              className="text-2xl font-bold tracking-tight"
               style={{ color: "oklch(24.571% 0.12604 288.685)" }}
             >
               Analytics Dashboard
             </h1>
             <p className="text-muted-foreground">
-              Comprehensive insights and performance metrics
+              Comprehensive insights and performance metrics.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -493,13 +488,10 @@ export function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Quick Stats Row */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/20 border border-blue-200 dark:border-blue-800/30 rounded-xl p-4">
+          <div className="rounded-xl border-2 p-5" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                <Package className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-              </div>
+              <Package className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm text-muted-foreground">Total Products</p>
                 <p className="text-2xl font-bold">{products.length}</p>
@@ -507,9 +499,8 @@ export function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950/30 dark:to-amber-900/20 border border-amber-200 dark:border-amber-800/30 rounded-xl p-4">
+          <div className="rounded-xl border-2 p-5" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
             <div className="flex items-center gap-3">
-              
               <div>
                 <p className="text-sm text-muted-foreground">Opening Stock</p>
                 <p className="text-2xl font-bold">{totalMasterCount}</p>
@@ -517,11 +508,9 @@ export function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950/30 dark:to-slate-900/20 border border-slate-200 dark:border-slate-800/30 rounded-xl p-4">
+          <div className="rounded-xl border-2 p-5" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-slate-100 dark:bg-slate-900/30 rounded-lg">
-                <TrendingDown className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-              </div>
+              <TrendingDown className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm text-muted-foreground">Closing Stock</p>
                 <p className="text-2xl font-bold">{totalAvailability}</p>
@@ -531,10 +520,8 @@ export function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Transaction Analytics */}
-        <Card className="lg:col-span-2 border-2 bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-slate-900/30 dark:to-slate-900/20">
+        <Card className="lg:col-span-2">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Transaction Analytics</CardTitle>
@@ -548,19 +535,17 @@ export function AnalyticsPage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="border-2 border-slate-400 dark:border-slate-600 rounded-lg p-4">
+                <div className="rounded-lg border-2 p-5" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                      <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                    </div>
+                    <Users className="h-5 w-5 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Total Borrowed</p>
                       <p className="text-2xl font-bold">{totalBorrowed}</p>
                     </div>
                   </div>
-                  <div className="h-2 bg-blue-100 dark:bg-blue-900/30 rounded-full overflow-hidden">
+                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: "oklch(24.571% 0.12604 288.685 / 0.25)" }}>
                     <div 
-                      className="h-full bg-blue-500 rounded-full transition-all duration-500"
+                      className="h-full bg-primary rounded-full transition-all duration-500"
                       style={{ width: `${Math.min((totalBorrowed / (totalMasterCount || 1)) * 100, 100)}%` }}
                     />
                   </div>
@@ -573,9 +558,10 @@ export function AnalyticsPage() {
                           value={borrowedSearch}
                           onChange={(e) => setBorrowedSearch(e.target.value)}
                           placeholder="Search products"
-                          className="h-8 w-full rounded-md border border-input bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+                          className="h-8 w-full rounded-md border-2 bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+                          style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}
                         />
-                        <div className="mt-2 max-h-40 overflow-y-auto pr-1 space-y-1">
+                        <div className="mt-3 max-h-40 overflow-y-auto pr-1 pb-2 space-y-1">
                           {filteredBorrowedProducts.map((item) => (
                             <div key={item.name} className="flex items-center justify-between text-sm">
                               <span className="truncate">{item.name}</span>
@@ -595,19 +581,17 @@ export function AnalyticsPage() {
               </div>
 
               <div className="space-y-4">
-                <div className="border-2 border-slate-400 dark:border-slate-600 rounded-lg p-4">
+                <div className="rounded-lg border-2 p-5" style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
-                      <ShoppingCart className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                    </div>
+                    <ShoppingCart className="h-5 w-5 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Total Purchased</p>
                       <p className="text-2xl font-bold">{totalPurchased}</p>
                     </div>
                   </div>
-                  <div className="h-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-full overflow-hidden">
+                  <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: "oklch(24.571% 0.12604 288.685 / 0.25)" }}>
                     <div 
-                      className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                      className="h-full bg-primary rounded-full transition-all duration-500"
                       style={{ width: `${Math.min((totalPurchased / (totalMasterCount || 1)) * 100, 100)}%` }}
                     />
                   </div>
@@ -620,9 +604,10 @@ export function AnalyticsPage() {
                           value={purchasedSearch}
                           onChange={(e) => setPurchasedSearch(e.target.value)}
                           placeholder="Search products"
-                          className="h-8 w-full rounded-md border border-input bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+                          className="h-8 w-full rounded-md border-2 bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+                          style={{ borderColor: "oklch(24.571% 0.12604 288.685)" }}
                         />
-                        <div className="mt-2 max-h-40 overflow-y-auto pr-1 space-y-1">
+                        <div className="mt-3 max-h-40 overflow-y-auto pr-1 pb-2 space-y-1">
                           {filteredPurchasedProducts.map((item) => (
                             <div key={item.name} className="flex items-center justify-between text-sm">
                               <span className="truncate">{item.name}</span>
@@ -645,8 +630,7 @@ export function AnalyticsPage() {
           </CardContent>
         </Card>
 
-        {/* Low Stock Alerts */}
-        <Card className="bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-slate-900/30 dark:to-slate-900/20">
+        <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Low Stock Alerts</CardTitle>
@@ -662,9 +646,7 @@ export function AnalyticsPage() {
           <CardContent>
             {lowStockProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-full mb-4">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-                </div>
+                <CheckCircle className="mb-4 h-6 w-6 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">All products are well-stocked</p>
               </div>
             ) : (
@@ -674,7 +656,7 @@ export function AnalyticsPage() {
                   return (
                     <div
                       key={product.id}
-                      className="p-3 border rounded-lg hover:border-amber-300 dark:hover:border-amber-700 transition-colors"
+                      className="rounded-lg border border-input p-3 transition-colors"
                     >
                       <div className="flex items-center justify-between mb-2">
                         <p className="font-medium text-sm truncate">{product.name}</p>
@@ -687,9 +669,9 @@ export function AnalyticsPage() {
                           <span className="text-muted-foreground">Stock Level</span>
                           <span className="font-medium">{percentage}%</span>
                         </div>
-                        <div className="h-2 bg-amber-100 dark:bg-amber-900/30 rounded-full overflow-hidden">
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
                           <div 
-                            className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full transition-all duration-500"
+                            className="h-full bg-primary rounded-full transition-all duration-500"
                             style={{ width: `${percentage}%` }}
                           />
                         </div>
@@ -709,8 +691,7 @@ export function AnalyticsPage() {
         </Card>
       </div>
 
-      {/* Monthly Reports */}
-      <Card className="border-2 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-slate-900/30 dark:to-slate-900/20">
+      <Card>
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -840,67 +821,6 @@ export function AnalyticsPage() {
         </CardContent>
       </Card>
 
-      {/* CSS Animations */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-in {
-          animation-name: enter;
-          animation-duration: 150ms;
-          animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .fade-in {
-          animation: fadeIn 0.5s ease-out;
-        }
-        
-        /* Modern scrollbar */
-        ::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-        }
-        
-        ::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-          background: hsl(var(--muted-foreground) / 0.2);
-          border-radius: 3px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-          background: hsl(var(--muted-foreground) / 0.3);
-        }
-        
-        /* Smooth transitions */
-        * {
-          transition: background-color 0.2s ease, 
-                      border-color 0.2s ease, 
-                      color 0.2s ease;
-        }
-        
-        /* Focus styles */
-        :focus-visible {
-          outline: 2px solid hsl(var(--ring));
-          outline-offset: 2px;
-        }
-        
-        /* Selection */
-        ::selection {
-          background: hsl(var(--primary) / 0.2);
-          color: hsl(var(--primary-foreground));
-        }
-      `}</style>
     </div>
   )
 }
